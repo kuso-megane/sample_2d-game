@@ -18,6 +18,14 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     private void Update() {
         this.axisH = Input.GetAxisRaw("Horizontal"); //1 or -1
+
+        //向き調整
+        if (this.axisH > 0.0f) {
+            transform.localScale = new Vector2(1, 1);
+        }
+        else if(this.axisH < 0.0f) {
+            transform.localScale = new Vector2(-1, 1);
+        }
     }
 
 
