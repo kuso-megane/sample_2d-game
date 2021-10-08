@@ -7,7 +7,7 @@ public class PlayerController : MonoBehaviour
     private Rigidbody2D rbody;
     private float axisH;
     public float speed;
-    public float jump = 9.0f;
+    public float jump;
 
     public LayerMask groundLayer;
     private bool goJump = false;
@@ -58,9 +58,16 @@ public class PlayerController : MonoBehaviour
 
         //jump
         if (onGround && goJump) {
+            Debug.Log(this.rbody.velocity.x);
             Vector2 jumpPw = new Vector2(0, this.jump);
             this.rbody.AddForce(jumpPw, ForceMode2D.Impulse);
+            
             this.goJump = false;
+        }
+
+        //空中機動
+        if (!onGround) {
+            //this.rbody.velocity = new Vector2(this.rbody.velocity.x * 0.999f, this.rbody.velocity.y);
         }
     }
 
@@ -68,6 +75,6 @@ public class PlayerController : MonoBehaviour
 
     void Jump() {
         this.goJump = true;
-
+        Debug.Log("jump!");
     }
 }

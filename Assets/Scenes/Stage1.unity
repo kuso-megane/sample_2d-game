@@ -527,8 +527,12 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2723443683831719434, guid: 5939aedabc64b4bb3805f19f12cdc3aa, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 1.7907829
+      objectReference: {fileID: 0}
+    - target: {fileID: 2723443683831719434, guid: 5939aedabc64b4bb3805f19f12cdc3aa, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 1.97
+      value: 3.5963
       objectReference: {fileID: 0}
     - target: {fileID: 2723443683831719434, guid: 5939aedabc64b4bb3805f19f12cdc3aa, type: 3}
       propertyPath: m_LocalPosition.y
@@ -795,7 +799,7 @@ Rigidbody2D:
   m_Mass: 1
   m_LinearDrag: 0
   m_AngularDrag: 0.05
-  m_GravityScale: 1
+  m_GravityScale: 1.5
   m_Material: {fileID: 0}
   m_Interpolate: 0
   m_SleepingMode: 1
@@ -875,7 +879,7 @@ CapsuleCollider2D:
   m_GameObject: {fileID: 1064083170}
   m_Enabled: 1
   m_Density: 1
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 6200000, guid: ba00dc169e66647d58674243c5c3d751, type: 2}
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
@@ -943,7 +947,7 @@ BoxCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -0.61172485, y: -5.953121}
+  m_Offset: {x: -1.1936092, y: -5.893441}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -954,7 +958,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 19.888851, y: 0.7911186}
+  m_Size: {x: 21.05262, y: 0.91047907}
   m_EdgeRadius: 0
 --- !u!1001 &1938944316
 PrefabInstance:
@@ -969,7 +973,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 598187445309010881, guid: 1a88e7c09669a4d68813b7be2b9a667b, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -0.42
+      value: -1.17
       objectReference: {fileID: 0}
     - target: {fileID: 598187445309010881, guid: 1a88e7c09669a4d68813b7be2b9a667b, type: 3}
       propertyPath: m_LocalPosition.y
@@ -1138,8 +1142,12 @@ PrefabInstance:
       value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 598187445309010881, guid: 1a88e7c09669a4d68813b7be2b9a667b, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 1.3979
+      objectReference: {fileID: 0}
+    - target: {fileID: 598187445309010881, guid: 1a88e7c09669a4d68813b7be2b9a667b, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -5.68
+      value: -5.9187
       objectReference: {fileID: 0}
     - target: {fileID: 598187445309010881, guid: 1a88e7c09669a4d68813b7be2b9a667b, type: 3}
       propertyPath: m_LocalPosition.y
