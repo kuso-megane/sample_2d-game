@@ -51,14 +51,14 @@ public class PlayerController : MonoBehaviour
         }
         
 
-        //地上の速度更
-        if (onGround) {
+        //速度更新
+        if (onGround || this.axisH != 0) {
             this.rbody.velocity = new Vector2(this.axisH * speed, this.rbody.velocity.y);
         }
 
         //jump
         if (onGround && goJump) {
-            Debug.Log(this.rbody.velocity.x);
+            
             Vector2 jumpPw = new Vector2(0, this.jump);
             this.rbody.AddForce(jumpPw, ForceMode2D.Impulse);
             
@@ -75,6 +75,5 @@ public class PlayerController : MonoBehaviour
 
     void Jump() {
         this.goJump = true;
-        Debug.Log("jump!");
     }
 }
