@@ -13,11 +13,27 @@ public class PlayerController : MonoBehaviour
     private bool goJump = false;
     private bool onGround = false;
 
+    private Animator animator;
+
+    private Dictionary<string, string> animes = new Dictionary<string, string>() {
+        {"stopAnime", "PlayerStop"},
+        {"runAnime", "PlayerRun"},
+        {"jumpAnime", "PlayerJump"},
+        {"goalAnime", "PlayerGoal"},
+        {"deadAnime", "PlayerOver"}
+    };
+
+    private string nowAnime = "";
+    private string oldAnime = "";
+
 
     // Start is called before the first frame update
     void Start()
     {
-       this.rbody = this.GetComponent<Rigidbody2D>();
+        this.rbody = this.GetComponent<Rigidbody2D>();
+        this.animator = this.GetComponent<Animator>();
+        this.nowAnime = this.animes["stopAnime"];
+        this.oldAnime = this.animes["stopAnime"];
     }
 
     // Update is called once per frame
@@ -69,6 +85,26 @@ public class PlayerController : MonoBehaviour
         if (!onGround) {
             //this.rbody.velocity = new Vector2(this.rbody.velocity.x * 0.999f, this.rbody.velocity.y);
         }
+
+        //animation
+        if (onGround) {
+
+            if (axisH == 0) {
+                nowAnime = this.animes["stopAnime"];
+            }
+            else {
+                nowAnime = this.animes["runAnime"];
+            }
+        }
+        else {
+            nowAnime = this.animes["jumpAnime"];
+        }
+
+        if (nowAnime != oldAnime) {
+            oldAnime = nowAnime;
+            animator.Play(nowAnime);
+        }
+        
     }
 
 
