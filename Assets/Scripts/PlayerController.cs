@@ -2,12 +2,22 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+
 public class PlayerController : MonoBehaviour
 {
-    private Rigidbody2D rbody;
     private float axisH;
+    public Rigidbody2D rbody;
+    
     public float speed;
     public float jump;
+
+    public static int gameState_static;
+    //this.gameStateの種類
+    private int state_playing = 0;
+    private int state_clear = 1;
+    private int state_over = 2;
+    private int state_end = 3;
+
 
     public LayerMask groundLayer;
     private bool goJump = false;
@@ -34,12 +44,19 @@ public class PlayerController : MonoBehaviour
         this.animator = this.GetComponent<Animator>();
         this.nowAnime = this.animes["stopAnime"];
         this.oldAnime = this.animes["stopAnime"];
+
+        gameState_static = this.state_playing;
     }
 
     // Update is called once per frame
-    private void Update() {
-        this.axisH = Input.GetAxisRaw("Horizontal"); //1 or -1
+    void Update() {
 
+        if (gameState_static != this.state_playing) {
+            return;
+        }
+
+
+        this.axisH = Input.GetAxisRaw("Horizontal"); //1 or -1
 
         //ジャンプボタン判定
         if (Input.GetButtonDown("Jump")) {
@@ -49,15 +66,19 @@ public class PlayerController : MonoBehaviour
 
 
     void FixedUpdate() {
+
+        if (gameState_static != this.state_playing) {
+            return;
+        }
         
-        onGround = Physics2D.Linecast(
+        this.onGround = Physics2D.Linecast(
             transform.position,
             transform.position - (transform.up * 0.1f),
             this.groundLayer
         );
 
         //向き調整
-        if (onGround) {
+        if (this.onGround) {
             if (this.axisH > 0.0f) {
                 transform.localScale = new Vector2(1, 1);
             }
@@ -68,12 +89,12 @@ public class PlayerController : MonoBehaviour
         
 
         //速度更新
-        if (onGround || this.axisH != 0) {
+        if (this.onGround || this.axisH != 0) {
             this.rbody.velocity = new Vector2(this.axisH * speed, this.rbody.velocity.y);
         }
 
         //jump
-        if (onGround && goJump) {
+        if (this.onGround && this.goJump) {
             
             Vector2 jumpPw = new Vector2(0, this.jump);
             this.rbody.AddForce(jumpPw, ForceMode2D.Impulse);
@@ -82,39 +103,77 @@ public class PlayerController : MonoBehaviour
         }
 
         //空中機動
-        if (!onGround) {
+        if (!this.onGround) {
             //this.rbody.velocity = new Vector2(this.rbody.velocity.x * 0.999f, this.rbody.velocity.y);
         }
 
-        this.Animate(onGround);
-        
-    }
-
-    void Animate(bool onGround) {
-
         //animation
-        if (onGround) {
+        if (this.onGround) {
 
             if (axisH == 0) {
-                nowAnime = this.animes["stopAnime"];
+                this.nowAnime = this.animes["stopAnime"];
             }
             else {
-                nowAnime = this.animes["runAnime"];
+                this.nowAnime = this.animes["runAnime"];
             }
         }
         else {
-            nowAnime = this.animes["jumpAnime"];
+            this.nowAnime = this.animes["jumpAnime"];
         }
 
-        if (nowAnime != oldAnime) {
-            oldAnime = nowAnime;
-            animator.Play(nowAnime);
+        if (this.nowAnime != this.oldAnime) {
+            this.oldAnime = this.nowAnime;
+            this.animator.Play(this.nowAnime);
         }
+        
     }
 
 
 
     void Jump() {
         this.goJump = true;
+    }
+
+
+    void OnTriggerEnter2D(Collider2D other) {
+
+        if (gameState_static != this.state_playing) {
+            return;
+        }
+        
+        GameObject collidedObj = other.gameObject;
+        if (collidedObj.tag == "Goal") {
+            this.Goal();
+        }
+        else if (collidedObj.tag == "Dead"){
+            this.GameOver();
+        }
+
+    }
+
+    public void Goal() {
+
+        gameState_static = this.state_clear;
+        this.animator.Play(this.animes["goalAnime"]);
+
+        this.GameStop();
+    }
+
+
+    public void GameOver() {
+
+        gameState_static = this.state_over;
+        this.animator.Play(this.animes["deadAnime"]);
+
+        this.GameStop();
+
+        //ゲームオーバー演出
+        this.GetComponent<CapsuleCollider2D>().enabled = false;
+        this.rbody.AddForce(new Vector2(0, 5), ForceMode2D.Impulse);
+    }
+
+
+    void GameStop() {
+        this.rbody.velocity = new Vector2(0, 0);
     }
 }
