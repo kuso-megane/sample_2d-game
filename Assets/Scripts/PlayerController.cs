@@ -48,7 +48,7 @@ public class PlayerController : MonoBehaviour
     }
 
 
-    private void FixedUpdate() {
+    void FixedUpdate() {
         
         onGround = Physics2D.Linecast(
             transform.position,
@@ -86,6 +86,12 @@ public class PlayerController : MonoBehaviour
             //this.rbody.velocity = new Vector2(this.rbody.velocity.x * 0.999f, this.rbody.velocity.y);
         }
 
+        this.Animate(onGround);
+        
+    }
+
+    void Animate(bool onGround) {
+
         //animation
         if (onGround) {
 
@@ -104,7 +110,6 @@ public class PlayerController : MonoBehaviour
             oldAnime = nowAnime;
             animator.Play(nowAnime);
         }
-        
     }
 
 
