@@ -10,14 +10,7 @@ public class PlayerController : MonoBehaviour
     
     public float speed;
     public float jump;
-
-    public static int gameState_static;
-    //this.gameStateの種類
-    private int state_playing = 0;
-    private int state_clear = 1;
-    private int state_over = 2;
-    private int state_end = 3;
-
+    
 
     public LayerMask groundLayer;
     private bool goJump = false;
@@ -45,13 +38,13 @@ public class PlayerController : MonoBehaviour
         this.nowAnime = this.animes["stopAnime"];
         this.oldAnime = this.animes["stopAnime"];
 
-        gameState_static = this.state_playing;
+        GameManager.gameState_static = GameManager.state_playing;
     }
 
     // Update is called once per frame
     void Update() {
 
-        if (gameState_static != this.state_playing) {
+        if (GameManager.gameState_static != GameManager.state_playing) {
             return;
         }
 
@@ -67,7 +60,7 @@ public class PlayerController : MonoBehaviour
 
     void FixedUpdate() {
 
-        if (gameState_static != this.state_playing) {
+        if (GameManager.gameState_static != GameManager.state_playing) {
             return;
         }
         
@@ -137,7 +130,7 @@ public class PlayerController : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D other) {
 
-        if (gameState_static != this.state_playing) {
+        if (GameManager.gameState_static != GameManager.state_playing) {
             return;
         }
         
@@ -153,7 +146,7 @@ public class PlayerController : MonoBehaviour
 
     public void Goal() {
 
-        gameState_static = this.state_clear;
+        GameManager.gameState_static = GameManager.state_clear;
         this.animator.Play(this.animes["goalAnime"]);
 
         this.GameStop();
@@ -162,7 +155,7 @@ public class PlayerController : MonoBehaviour
 
     public void GameOver() {
 
-        gameState_static = this.state_over;
+        GameManager.gameState_static = GameManager.state_over;
         this.animator.Play(this.animes["deadAnime"]);
 
         this.GameStop();
